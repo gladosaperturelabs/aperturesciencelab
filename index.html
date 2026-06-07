@@ -205,12 +205,12 @@ cubeButton.addEventListener("click", () => {
     });
 
 
-    function startNoCakeAudio() {
-      peacefulAudio.volume = 0.35;
-      peacefulAudio.play().catch(() => {
-        // Browsers often block background audio until the first click/key press.
-      });
-    }
+   function startNoCakeAudio() {
+  NoCakeAudio.volume = 0.35;
+  NoCakeAudio.play().catch(() => {
+    // Browsers often block background audio until the first click/key press.
+  });
+}
 
     window.addEventListener("load", startNoCakeAudio);
 
