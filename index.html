@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bedroom</title>
+
+ <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      background-image: url("bedroom.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
+    }
+
+    .letter-image {   /* GLaDOS letter */
+      position: fixed;
+      top: 7vh;
+      left: 18vw;
+      width: 36vw;
+      max-width: 680px;
+      min-width: 420px;
+      height: auto;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.75);
+      z-index: 5;
+    }
+
+/* coob button */
+    .cube-button {
+      position: fixed;
+      bottom: 24px;
+      left: 28px;
+      width: 120px;
+      height: auto;
+      cursor: pointer;
+      z-index: 20;
+      transition: transform 0.15s ease;
+    }
+
+    .cube-button:hover {
+      transform: scale(1.06);
+    }
+
+.invisible-zone {
+      position: fixed;
+      top: 35vh;
+      left: 66vw;
+      width: 7vw;
+      height: 9vh;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      z-index: 30;
+    }
+
+     /* butttons */
+    .buttons {
+      position: fixed;
+      left: 30vw;
+      top: 84vh;
+      display: flex;
+      gap: 80px;
+      align-items: center;
+      z-index: 25;
+    }
+
+    .btn {
+      width: 120px;
+      height: auto;
+      user-select: none;
+    }
+
+    .yes-btn {
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .yes-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .no-btn {
+      position: fixed;
+      left: calc(30vw + 200px);
+      top: 84vh;
+      cursor: default;
+      transition: left 0.25s ease, top 0.25s ease, transform 0.15s ease;
+      z-index: 40;
+    }
+
+ /* Blue hint text at bottom */
+    .bottom-box {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #0066cc;
+      font-weight: bold;
+      text-align: center;
+      background-color: #f0f8ff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      width: 90%;
+      max-width: 700px;
+      font-size: 18px;
+    }
+
+    .bottom-box.visible {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .letter-image {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 82vw;
+        min-width: unset;
+      }
+
+      .buttons {
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 40px;
+      }
+
+      .no-btn {
+        left: 58vw;
+      }
+
+      .invisible-zone {
+        left: 66vw;
+        top: 35vh;
+        width: 12vw;
+      }
+    }
+  </style>
+</head>
+
+  <body>
+
+     <audio id="NoCakeAudio" src="nocakeforyou.mp3" loop></audio>
+    <audio id="cubeAudio" src="ohcoob.mp3"></audio>
+  <audio id="dontTouchAudio" src="donttouch.mp3"></audio>
+
+     <img src="letter.jpg" alt="GLaDOS transcription letter" class="letter-image" />
+
+  <img
+    id="cubeButton"
+    src="coob.jpg"
+    alt="Cube Button"
+    class="cube-button"
+  />
+
+     <button
+    id="invisibleZone"
+    class="invisible-zone"
+    aria-label="Definitely do not touch this"
+  ></button>
+
+  <div class="buttons">
+    <img id="yesButton" src="yes.jpg" class="btn yes-btn" alt="Yes" />
+  </div>
+
+  <img id="noButton" src="no.jpg" class="btn no-btn" alt="No" />
+
+  <div id="coordinateToast" class="bottom-box">
+    just to check you’ve had enough coffee and “turned your brain on” - the coordinates to your first chamber are in the text above.
+  </div>
+
+  <script>
+
+    const NoCakeAudio = document.getElementById("NoCakeAudio");
+    const cubeAudio = document.getElementById("cubeAudio");
+    const dontTouchAudio = document.getElementById("dontTouchAudio");
+    const cubeButton = document.getElementById("cubeButton");
+    const invisibleZone = document.getElementById("invisibleZone");
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const coordinateToast = document.getElementById("coordinateToast");
+
+cubeButton.addEventListener("click", () => {
+      cubeAudio.currentTime = 0;
+      cubeAudio.play();
+    });
+
+    invisibleZone.addEventListener("click", () => {
+      dontTouchAudio.currentTime = 0;
+      dontTouchAudio.play();
+    });
+
+    yesButton.addEventListener("click", () => {
+      coordinateToast.classList.add("visible");
+    });
+
+
+    function startNoCakeAudio() {
+      peacefulAudio.volume = 0.35;
+      peacefulAudio.play().catch(() => {
+        // Browsers often block background audio until the first click/key press.
+      });
+    }
+
+    window.addEventListener("load", startNoCakeAudio);
+
+    ["click", "keydown", "dragstart"].forEach(eventName => {
+      document.addEventListener(eventName, startNoCakeAudio, { once: true });
+    });
+
+     function moveNoButton() {
+      const buttonWidth = noButton.offsetWidth;
+      const buttonHeight = noButton.offsetHeight;
+
+      const maxX = window.innerWidth - buttonWidth - 20;
+      const maxY = window.innerHeight - buttonHeight - 20;
+
+      const randomX = Math.floor(Math.random() * maxX) + 10;
+      const randomY = Math.floor(Math.random() * maxY) + 10;
+
+      noButton.style.left = randomX + "px";
+      noButton.style.top = randomY + "px";
+      noButton.style.transform = "rotate(" + (Math.random() * 20 - 10) + "deg)";
+    }
+
+    noButton.addEventListener("mouseover", moveNoButton);
+    noButton.addEventListener("mouseenter", moveNoButton);
+    noButton.addEventListener("click", moveNoButton);
+  </script>
+</body>
+</html>
