@@ -53,9 +53,9 @@
 .invisible-zone {
       position: fixed;
       top: 40vh;
-      left: 66vw;
-      width: 8vw;
-      height: 10vh;
+      left: 64vw;
+      width: 7vw;
+      height: 9vh;
       cursor: pointer;
       background: transparent;
       border: none;
@@ -97,13 +97,25 @@
       z-index: 40;
     }
 
- /* Blue hint text at bottom */
-.bottom-box {
-    color: #4a8cff;
-    background-color: rgba(255,255,255,0.85);
-    font-size: 12px;
-    padding: 8px 16px;
-}
+ /* hint at bottom */
+    .bottom-box {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #0066cc;
+      font-weight: bold;
+      text-align: center;
+      background-color: #f0f8ff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      width: 90%;
+      max-width: 700px;
+      font-size: 18px;
+    }
 
     .bottom-box.visible {
       display: block;
