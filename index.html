@@ -144,11 +144,37 @@
         top: 35vh;
         width: 12vw;
       }
+
+      #loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+#loadingScreen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+      #loadingScreen {
+    transition: opacity 1s ease;
+}
+      
     }
   </style>
 </head>
 
   <body>
+
+    <div id="loadingScreen" onclick="closeLoadingScreen()">
+    <img src="loading.jpg" alt="Loading Screen">
+</div>
 
      <audio id="NoCakeAudio" src="nocakeforyou.mp3" loop></audio>
     <audio id="cubeAudio" src="ohcoob.mp3"></audio>
@@ -236,6 +262,15 @@ cubeButton.addEventListener("click", () => {
     noButton.addEventListener("mouseover", moveNoButton);
     noButton.addEventListener("mouseenter", moveNoButton);
     noButton.addEventListener("click", moveNoButton);
+
+    function closeLoadingScreen() {
+    const screen = document.getElementById("loadingScreen");
+    screen.style.opacity = "0";
+
+    setTimeout(() => {
+        screen.style.display = "none";
+    }, 1000);
+}
   </script>
 </body>
 </html>
